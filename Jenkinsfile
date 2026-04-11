@@ -5,26 +5,23 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh '''
-                echo "Build Step: No compilation needed for Python project"
+                bat '''
+                echo Build Step: No compilation needed
                 '''
             }
         }
 
         stage('Test') {
             steps {
-                sh '''
-                echo "Running tests with pytest"
+                bat '''
+                echo Running tests...
 
-                # Create virtual environment (safe and standard)
-                python3 -m venv venv
-                . venv/bin/activate
+                python -m venv venv
+                call venv\\Scripts\\activate
 
-                # Install dependencies
                 pip install --upgrade pip
                 pip install pytest numpy pandas scikit-learn
 
-                # Run tests
                 pytest -v
                 '''
             }
@@ -32,8 +29,7 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                echo "Deploy Step: No deployment required for this lab"
-                echo "In real projects, this would publish artifacts or models"
+                echo "Deploy step not required"
             }
         }
     }
